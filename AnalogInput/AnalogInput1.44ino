@@ -1,0 +1,31 @@
+void setup(){
+ Serial.begin(9600);
+}
+void loop()
+{
+ int sensorValue;
+ long sum=0;
+// sum=analogRead(A0);
+ for(int i=0;i<1024;i++)
+ {
+ sensorValue=analogRead(A0);
+ sum=sensorValue+sum;
+ delay(2);
+ }
+  long ortalamaDeger = sum/1024;        // ortalama değer elde ediliyot
+  float mVolt=ortalamaDeger*(5000/1023); // milli Volt Değeri  mVolt=deger*5000/1023   ortalamaDeger*(5000/1023) or  ortalamaDeger*4.89 calculate
+  float Vsig=mVolt/1000;                 // Volt Değeri        V=mV/1000 
+  float IY=Vsig*307;                     // Işık Yoğunluğu     IY=Vsig*307 
+  float UI=IY/200;                       // UV İndeksi         UI=IY/200
+    Serial.print("UV index is:");
+    Serial.print((ortalamaDeger*1000/4.3-83)/21);     // get a detailed calculating expression for UV index in schematic files.
+    Serial.print("\tOkunan Değer=");        Serial.print(ortalamaDeger);
+    Serial.print("\tmVolt=");             Serial.print(mVolt);
+    Serial.print("\tVsig=");              Serial.print(Vsig);
+    Serial.print("\tIşık Yoğunluğu=");    Serial.print(IY);
+    Serial.print("\tUV İndex=");          Serial.print(UI);
+    Serial.print("\n");
+    
+    
+    delay(2000);
+}
